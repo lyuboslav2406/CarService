@@ -1,0 +1,43 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <UserSecretsId>aspnet-CarService-BBB373B5-EF3F-4DBB-B8AA-7152CEC275BF</UserSecretsId>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <CodeAnalysisRuleSet>..\..\Rules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <AdditionalFiles Include="..\..\stylecop.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="5.0.0" />
+    <PackageReference Include="BuildBundlerMinifier" Version="3.2.449" />
+    <PackageReference Include="Microsoft.Web.LibraryManager.Build" Version="2.1.113" />
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="5.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="5.0.0" />
+    <PackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.261" PrivateAssets="all">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\CarService.Common\CarService.Common.csproj" />
+    <ProjectReference Include="..\..\Data\CarService.Data.Models\CarService.Data.Models.csproj" />
+    <ProjectReference Include="..\..\Data\CarService.Data\CarService.Data.csproj" />
+    <ProjectReference Include="..\..\Services\CarService.Services.Data\CarService.Services.Data.csproj" />
+    <ProjectReference Include="..\..\Services\CarService.Services.Mapping\CarService.Services.Mapping.csproj" />
+    <ProjectReference Include="..\..\Services\CarService.Services.Messaging\CarService.Services.Messaging.csproj" />
+    <ProjectReference Include="..\..\Services\CarService.Services\CarService.Services.csproj" />
+    <ProjectReference Include="..\CarService.Web.Infrastructure\CarService.Web.Infrastructure.csproj" />
+    <ProjectReference Include="..\CarService.Web.ViewModels\CarService.Web.ViewModels.csproj" />
+  </ItemGroup>
+</Project>
