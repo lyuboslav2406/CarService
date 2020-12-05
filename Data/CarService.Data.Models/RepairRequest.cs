@@ -5,7 +5,7 @@
 
     using CarService.Data.Common.Models;
 
-    public class RepairRequest : BaseModel<string>
+    public class RepairRequest : BaseDeletableModel<string>
     {
         public RepairRequest()
         {

@@ -3,9 +3,9 @@
     using System.Collections.Generic;
     using System.Linq;
 
-    using CarService.Data.Common.Repositories;
-    using CarService.Data.Models;
-    using CarService.Services.Mapping;
+    using global::CarService.Data.Common.Repositories;
+    using global::CarService.Data.Models;
+    using global::CarService.Services.Mapping;
 
     public class SettingsService : ISettingsService
     {

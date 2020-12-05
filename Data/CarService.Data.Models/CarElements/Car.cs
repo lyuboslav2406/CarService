@@ -6,7 +6,7 @@
 
     using CarService.Data.Common.Models;
 
-    public class Car : BaseModel<string>
+    public class Car : BaseDeletableModel<string>
     {
         public Car()
         {
@@ -17,8 +17,12 @@
         [Required]
         public int Year { get; set; }
 
+        public int ModelId { get; set; }
+
         [Required]
         public Model Model { get; set; }
+
+        public int FuelTypeId { get; set; }
 
         [Required]
         public FuelType FuelType { get; set; }
@@ -29,6 +33,8 @@
 
         [Required]
         public string RegistrationNumber { get; set; }
+
+        public int TransmissionId { get; set; }
 
         [Required]
         public Transmission Transmission { get; set; }

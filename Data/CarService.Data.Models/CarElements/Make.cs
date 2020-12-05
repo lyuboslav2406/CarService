@@ -1,12 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using CarService.Data.Common.Models;
+using System.ComponentModel.DataAnnotations;
 
 namespace CarService.Data.Models.CarElements
 {
-    public class Make
+    public class Make : BaseDeletableModel<int>
     {
-        [Required]
-        public int Id { get; set; }
-
         public string Code { get; set; }
 
         [Required]

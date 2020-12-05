@@ -4,7 +4,7 @@
     using System.ComponentModel.DataAnnotations;
     using CarService.Data.Common.Models;
 
-    public class CarImage : BaseModel<string>
+    public class CarImage : BaseDeletableModel<string>
     {
         public CarImage()
         {
@@ -14,7 +14,7 @@
         public string Url { get; set; }
 
         [Required]
-        public int CarId { get; set; }
+        public string CarId { get; set; }
 
         public virtual Car Car { get; set; }
     }
