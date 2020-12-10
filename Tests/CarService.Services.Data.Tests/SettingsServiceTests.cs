@@ -1,20 +1,16 @@
-﻿namespace CarService.Services.Data.Tests
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using CarService.Data;
+using CarService.Data.Common.Repositories;
+using CarService.Data.Models;
+using CarService.Data.Repositories;
+using Microsoft.EntityFrameworkCore;
+using Moq;
+using Xunit;
+
+namespace CarService.Services.Data.Tests
 {
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Threading.Tasks;
-
-    using CarService.Data;
-    using CarService.Data.Common.Repositories;
-    using CarService.Data.Models;
-    using CarService.Data.Repositories;
-
-    using Microsoft.EntityFrameworkCore;
-
-    using Moq;
-
-    using Xunit;
-
     public class SettingsServiceTests
     {
         [Fact]

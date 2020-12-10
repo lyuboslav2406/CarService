@@ -22,7 +22,9 @@
         [Required]
         public Model Model { get; set; }
 
-        public int FuelTypeId { get; set; }
+        public int MakeId { get; set; }
+
+        public Make Make { get; set; }
 
         [Required]
         public FuelType FuelType { get; set; }
@@ -33,8 +35,6 @@
 
         [Required]
         public string RegistrationNumber { get; set; }
-
-        public int TransmissionId { get; set; }
 
         [Required]
         public Transmission Transmission { get; set; }

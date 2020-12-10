@@ -3,14 +3,22 @@
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
-    using global::CarService.Data.Models.CarElements;
+    using CloudinaryDotNet;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Mvc.Rendering;
 
     public interface ICarService
     {
-        Task<string> CreateAsync(Car car);
+        public Task<string> CreateAsync(int year, int modelId, int makeId, int fuelType, int transsmisionType, int cubicCapacity, string registrationNumber, int horsePower, string userId);
 
-        public List<string> GetFuelTypes();
+        Task<IEnumerable<string>> UploadAsync(Cloudinary cloudinary, ICollection<IFormFile> files);
 
-        //IEnumerable<T> GetAll<T>();
+        Task<string> AddImageInBase(IEnumerable<string> images, string carId);
+
+        IEnumerable<T> GetAllByUserId<T>(string userId);
+
+        public List<SelectListItem> GetFuelTypes();
+
+        public List<SelectListItem> GetTransmission();
     }
 }

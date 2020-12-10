@@ -2,6 +2,8 @@
 
 @{
     ViewData["Title"] = "Create";
+    var models = @Model.Models.Select(x => new SelectListItem(x.Title, x.Id.ToString()));
+    var makes = @Model.Makes.Select(x => new SelectListItem(x.Title, x.Id.ToString()));
 }
 
 <h1>Create</h1>
@@ -10,17 +12,25 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <form method="post" enctype="multipart/form-data" asp-controller="Cars" asp-action="Create">
+            <div>
+                <label for="img">Upload images:</label>
+                <input asp-for="CarImages" type="file" class="fancybox-button" multiple />
+            </div>
+            <div>
+                <label asp-for="MakeId">Make</label>
+                <select asp-for="MakeId" asp-items="makes" class="form-control"></select>
+                <span asp-validation-for="MakeId" class="text-danger"></span>
+            </div>
+            <div>
+                <label asp-for="ModelId">Model</label>
+                <select asp-for="ModelId" asp-items="models" class="form-control"></select>
+                <span asp-validation-for="ModelId" class="text-danger"></span>
+            </div>
             <div class="form-group">
                 <label asp-for="Year" class="control-label"></label>
                 <input asp-for="Year" class="form-control" />
                 <span asp-validation-for="Year" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="FuelTypes" class="control-label"></label>
-                <select asp-for="FuelTypes" class="form-control"></select>
-                <span asp-validation-for="FuelTypes" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="CubicCapacity" class="control-label"></label>
@@ -32,16 +42,22 @@
                 <input asp-for="HorsePower" class="form-control" />
                 <span asp-validation-for="HorsePower" class="text-danger"></span>
             </div>
+            <div>
+                <label asp-for="FuelType">FuelType</label>
+                <select asp-for="FuelType" asp-items="Model.FuelTypes" class="form-control"></select>
+                <span asp-validation-for="FuelType" class="text-danger"></span>
+            </div>
+            <div>
+                <label asp-for="TransmissionsId">FuelType</label>
+                <select asp-for="TransmissionsId" asp-items="Model.Transmissions" class="form-control"></select>
+                <span asp-validation-for="TransmissionsId" class="text-danger"></span>
+            </div>
             <div class="form-group">
                 <label asp-for="RegistrationNumber" class="control-label"></label>
                 <input asp-for="RegistrationNumber" class="form-control" />
                 <span asp-validation-for="RegistrationNumber" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Transmissions" class="control-label"></label>
-                <select asp-for="Transmissions" class="form-control"></select>
-                <span asp-validation-for="Transmissions" class="text-danger"></span>
-            </div>
+            <br />
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>

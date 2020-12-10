@@ -1,8 +1,9 @@
-﻿using CarService.Services.Mapping;
-
-namespace CarService.Web.ViewModels.Cars
+﻿namespace CarService.Web.ViewModels.Cars
 {
-    public class ModelsDropDrownViewModel : IMapFrom<Category>
+    using CarService.Data.Models.CarElements;
+    using CarService.Services.Mapping;
+
+    public class ModelsDropDrownViewModel : IMapFrom<Model>, IMapTo<Model>
     {
         public int Id { get; set; }
 

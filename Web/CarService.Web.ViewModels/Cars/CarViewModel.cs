@@ -3,7 +3,13 @@
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
-    public class CarViewModel
+    using CarService.Data.Models.CarElements;
+    using CarService.Services.Mapping;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Mvc.Rendering;
+    using static System.Net.Mime.MediaTypeNames;
+
+    public class CarViewModel : IMapTo<Car>, IMapFrom<Car>
     {
         [Required]
         public int Year { get; set; }
@@ -15,10 +21,15 @@
         public IEnumerable<ModelsDropDrownViewModel> Models { get; set; }
 
         [Required]
-        public int FuelType { get; set; }
+        public int MakeId { get; set; }
 
         [Required]
-        public IEnumerable<string> FuelTypes { get; set; }
+        public IEnumerable<MakesDropDownViewModel> Makes { get; set; }
+
+        [Required]
+        public int FuelType { get; set; }
+
+        public List<SelectListItem> FuelTypes { get; set; }
 
         public int CubicCapacity { get; set; }
 
@@ -30,8 +41,8 @@
         public int TransmissionsId { get; set; }
 
         [Required]
-        public IEnumerable<FuelTypesDropDownViewModel> Transmissions { get; set; }
+        public List<SelectListItem> Transmissions { get; set; }
 
-        public string CarImage { get; set; }
+        public ICollection<CarImage> CarImages { get; set; }
     }
 }
