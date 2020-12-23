@@ -1,0 +1,57 @@
+﻿@model CarService.Web.ViewModels.Repair.CreateRepairViewModel
+
+@{
+    ViewData["Title"] = "Create";
+    var carsList = @Model.Cars.Select(x => new SelectListItem(x.RegistrationNumber, x.Id.ToString()));
+}
+
+<h1>Create</h1>
+
+<h4>Repair</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post" enctype="multipart/form-data" asp-controller="Repair" asp-action="Create">
+            <div>
+                <label for="img">Upload images:</label>
+                <input asp-for="RepairImages" type="file" class="fancybox-button" multiple />
+            </div>
+            <div class="form-group">
+                <label asp-for="Date" class="control-label"></label>
+                <input asp-for="Date" class="form-control" />
+                <span asp-validation-for="Date" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div>
+                <label asp-for="RepairTypeId">FuelType</label>
+                <select asp-for="RepairTypeId" asp-items="Model.RepairType" class="form-control"></select>
+                <span asp-validation-for="RepairTypeId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Kilometers" class="control-label"></label>
+                <input asp-for="Kilometers" class="form-control" />
+                <span asp-validation-for="Kilometers" class="text-danger"></span>
+            </div>
+            <div>
+                <label asp-for="CarId">Cars</label>
+                <select asp-for="CarId" asp-items="carsList" class="form-control"></select>
+                <span asp-validation-for="CarId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

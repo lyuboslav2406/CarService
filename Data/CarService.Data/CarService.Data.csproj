@@ -22,6 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="jQuery" Version="3.5.1" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.0">
       <PrivateAssets>all</PrivateAssets>
@@ -42,6 +43,10 @@
     <ProjectReference Include="..\..\CarService.Common\CarService.Common.csproj" />
     <ProjectReference Include="..\CarService.Data.Common\CarService.Data.Common.csproj" />
     <ProjectReference Include="..\CarService.Data.Models\CarService.Data.Models.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Migrations\" />
   </ItemGroup>
 
 </Project>

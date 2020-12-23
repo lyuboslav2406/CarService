@@ -1,5 +1,6 @@
 ﻿namespace CarService.Services.Data
 {
+    using System.Collections;
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
@@ -24,22 +25,6 @@
         {
             this.carRepository = carRepository;
             this.carImagesRepository = carImagesRepository;
-        }
-
-        public async Task<string> AddImageInBase(IEnumerable<string> images, string carId)
-        {
-            foreach (var image in images)
-            {
-                var imageUrl = new CarImage
-                {
-                    Url = image,
-                    CarId = carId,
-                };
-                await this.carImagesRepository.AddAsync(imageUrl);
-                await this.carImagesRepository.SaveChangesAsync();
-            }
-
-            return carId;
         }
 
         public async Task<string> CreateAsync(int year, int modelId, int makeId, int fuelType, int transsmisionType, int cubicCapacity, string registrationNumber, int horsePower, string userId)
@@ -92,11 +77,41 @@
             return car.Id;
         }
 
-        public IEnumerable<T> GetAllByUserId<T>(string userId)
+        public async Task Delete(string carId)
         {
-            var allCars = this.carRepository.All().Where(a => a.User.Id == userId);
+            var imagesToDelete = this.carImagesRepository.All().Where(i => i.CarId == carId);
 
-            return allCars.To<T>();
+            foreach (var image in imagesToDelete)
+            {
+                this.carImagesRepository.Delete(image);
+                this.carImagesRepository.SaveChangesAsync();
+            }
+
+            var carToDelete = this.carRepository.All().Where(x => x.Id == carId).FirstOrDefault();
+
+            this.carRepository.HardDelete(carToDelete);
+            await this.carRepository.SaveChangesAsync();
+        }
+
+        public IEnumerable<T> GetAll<T>()
+        {
+            IQueryable<Car> query =
+                this.carRepository.All().OrderBy(x => x.RegistrationNumber);
+
+            return query.To<T>().ToList();
+        }
+
+        public IList<Car> GetAllByUserId(string userId)
+        {
+            var allCars = this.carRepository.All().Where(x => x.UserId == userId).ToList();
+
+            return allCars;
+        }
+
+        public Car GetById(string id)
+        {
+            var car = this.carRepository.All().Where(x => x.Id == id).FirstOrDefault();
+            return car;
         }
 
         public List<SelectListItem> GetFuelTypes()
@@ -123,43 +138,6 @@
             };
 
             return transmissions;
-        }
-
-        [System.Obsolete]
-        public async Task<IEnumerable<string>> UploadAsync(Cloudinary cloudinary, ICollection<IFormFile> files)
-        {
-            List<string> imagesUrl = new List<string>();
-
-            foreach (var file in files)
-            {
-                byte[] destinationImage;
-
-                using (var image = new MemoryStream())
-                {
-                    await file.CopyToAsync(image);
-
-                    destinationImage = image.ToArray();
-                }
-
-                using (var destinationStrem = new MemoryStream(destinationImage))
-                {
-                    var uploadParams = new ImageUploadParams()
-                    {
-                        File = new FileDescription(file.FileName, destinationStrem),
-                    };
-
-                    var result = await cloudinary.UploadAsync(uploadParams);
-
-                    if (result.Error == null)
-                    {
-                        var imgUrl = result.Uri.AbsoluteUri;
-
-                        imagesUrl.Add(imgUrl);
-                    }
-                }
-            }
-
-            return imagesUrl;
         }
     }
 }

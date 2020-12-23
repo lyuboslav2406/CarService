@@ -25,5 +25,12 @@
 
             return query.To<T>().ToList();
         }
+
+        public string GetNameById(int id)
+        {
+            var name = this.makesRepository.All().Where(a => a.Id == id).FirstOrDefault().Title;
+
+            return name;
+        }
     }
 }

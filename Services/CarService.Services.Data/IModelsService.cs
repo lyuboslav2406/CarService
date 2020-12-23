@@ -7,5 +7,7 @@
     public interface IModelsService
     {
         IEnumerable<T> GetAll<T>();
+
+        string GetNameById(int id);
     }
 }

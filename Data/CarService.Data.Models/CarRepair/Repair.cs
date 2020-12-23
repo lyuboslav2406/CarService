@@ -7,7 +7,7 @@
     using CarService.Data.Common.Models;
     using CarService.Data.Models.CarElements;
 
-    public class Repair : BaseModel<string>
+    public class Repair : BaseDeletableModel<string>
     {
         public Repair()
         {
@@ -31,5 +31,9 @@
         public Car Car { get; set; }
 
         public virtual ICollection<RepairImage> RepairImages { get; set; }
+
+        public virtual ICollection<RepairComment> Comments { get; set; }
+
+        public virtual ICollection<Vote> Votes { get; set; }
     }
 }

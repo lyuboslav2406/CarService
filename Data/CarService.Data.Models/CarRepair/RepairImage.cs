@@ -2,9 +2,10 @@
 {
     using System;
     using System.ComponentModel.DataAnnotations;
+
     using CarService.Data.Common.Models;
 
-    public class RepairImage : BaseModel<string>
+    public class RepairImage : BaseDeletableModel<string>
     {
         public RepairImage()
         {
@@ -15,7 +16,7 @@
         public string Url { get; set; }
 
         [Required]
-        public int RepairId { get; set; }
+        public string RepairId { get; set; }
 
         public virtual Repair Repair { get; set; }
     }

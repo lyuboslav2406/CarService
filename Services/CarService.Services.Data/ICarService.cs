@@ -1,21 +1,34 @@
 ﻿namespace CarService.Services.Data
 {
+    using System.Collections;
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
     using CloudinaryDotNet;
+    using global::CarService.Data.Models.CarElements;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc.Rendering;
 
     public interface ICarService
     {
-        public Task<string> CreateAsync(int year, int modelId, int makeId, int fuelType, int transsmisionType, int cubicCapacity, string registrationNumber, int horsePower, string userId);
+        public Task<string> CreateAsync(
+            int year,
+            int modelId,
+            int makeId,
+            int fuelType,
+            int transsmisionType,
+            int cubicCapacity,
+            string registrationNumber,
+            int horsePower,
+            string userId);
 
-        Task<IEnumerable<string>> UploadAsync(Cloudinary cloudinary, ICollection<IFormFile> files);
+        Car GetById(string id);
 
-        Task<string> AddImageInBase(IEnumerable<string> images, string carId);
+        IEnumerable<T> GetAll<T>();
 
-        IEnumerable<T> GetAllByUserId<T>(string userId);
+        Task Delete(string carId);
+
+        IList<Car> GetAllByUserId(string userId);
 
         public List<SelectListItem> GetFuelTypes();
 

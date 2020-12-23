@@ -323,8 +323,14 @@ namespace CarService.Data.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
 
                     b.Property<int>("Kilometers")
                         .HasColumnType("int");
@@ -338,6 +344,8 @@ namespace CarService.Data.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CarId");
+
+                    b.HasIndex("IsDeleted");
 
                     b.ToTable("Repairs");
                 });
@@ -354,19 +362,20 @@ namespace CarService.Data.Migrations
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("ParentId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ParentId1")
+                    b.Property<string>("ParentId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("RepairId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("RepairId1")
+                    b.Property<string>("RepairId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("UserId")
@@ -375,9 +384,11 @@ namespace CarService.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ParentId1");
+                    b.HasIndex("IsDeleted");
 
-                    b.HasIndex("RepairId1");
+                    b.HasIndex("ParentId");
+
+                    b.HasIndex("RepairId");
 
                     b.HasIndex("UserId");
 
@@ -392,13 +403,17 @@ namespace CarService.Data.Migrations
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("RepairId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("RepairId1")
+                    b.Property<string>("RepairId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Url")
@@ -407,7 +422,9 @@ namespace CarService.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("RepairId1");
+                    b.HasIndex("IsDeleted");
+
+                    b.HasIndex("RepairId");
 
                     b.ToTable("RepairImage");
                 });
@@ -423,10 +440,8 @@ namespace CarService.Data.Migrations
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("RepairId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("RepairId1")
+                    b.Property<string>("RepairId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("Type")
@@ -438,7 +453,7 @@ namespace CarService.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("RepairId1");
+                    b.HasIndex("RepairId");
 
                     b.HasIndex("UserId");
 
@@ -681,11 +696,13 @@ namespace CarService.Data.Migrations
                 {
                     b.HasOne("CarService.Data.Models.CarRepair.RepairComment", "Parent")
                         .WithMany()
-                        .HasForeignKey("ParentId1");
+                        .HasForeignKey("ParentId");
 
                     b.HasOne("CarService.Data.Models.CarRepair.Repair", "Repair")
-                        .WithMany()
-                        .HasForeignKey("RepairId1");
+                        .WithMany("Comments")
+                        .HasForeignKey("RepairId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("CarService.Data.Models.ApplicationUser", "User")
                         .WithMany()
@@ -704,7 +721,9 @@ namespace CarService.Data.Migrations
                 {
                     b.HasOne("CarService.Data.Models.CarRepair.Repair", "Repair")
                         .WithMany("RepairImages")
-                        .HasForeignKey("RepairId1");
+                        .HasForeignKey("RepairId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.Navigation("Repair");
                 });
@@ -712,8 +731,10 @@ namespace CarService.Data.Migrations
             modelBuilder.Entity("CarService.Data.Models.CarRepair.Vote", b =>
                 {
                     b.HasOne("CarService.Data.Models.CarRepair.Repair", "Repair")
-                        .WithMany()
-                        .HasForeignKey("RepairId1");
+                        .WithMany("Votes")
+                        .HasForeignKey("RepairId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("CarService.Data.Models.ApplicationUser", "User")
                         .WithMany()
@@ -808,7 +829,11 @@ namespace CarService.Data.Migrations
 
             modelBuilder.Entity("CarService.Data.Models.CarRepair.Repair", b =>
                 {
+                    b.Navigation("Comments");
+
                     b.Navigation("RepairImages");
+
+                    b.Navigation("Votes");
                 });
 #pragma warning restore 612, 618
         }

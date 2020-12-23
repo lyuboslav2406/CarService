@@ -9,6 +9,7 @@
     using CarService.Data.Repositories;
     using CarService.Data.Seeding;
     using CarService.Services.Data;
+    using CarService.Services.Data.RepairServices;
     using CarService.Services.Mapping;
     using CarService.Services.Messaging;
     using CarService.Web.ViewModels;
@@ -77,6 +78,11 @@
             services.AddTransient<ICarService, CarService>();
             services.AddTransient<IMakesService, MakesService>();
             services.AddTransient<IModelsService, ModelService>();
+            services.AddTransient<ICarImageService, CarImageService>();
+            services.AddTransient<IRepairService, RepairService>();
+            services.AddTransient<ICommentsService, CommentsService>();
+            services.AddTransient<IVoteService, VoteService>();
+            services.AddTransient<IRepairImageService, RepairImageService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

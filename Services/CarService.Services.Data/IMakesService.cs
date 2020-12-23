@@ -5,5 +5,7 @@
     public interface IMakesService
     {
         IEnumerable<T> GetAll<T>();
+
+        string GetNameById(int id);
     }
 }

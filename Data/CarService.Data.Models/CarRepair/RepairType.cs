@@ -1,9 +1,5 @@
 ﻿namespace CarService.Data.Models.CarRepair
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
-
     public enum RepairType
     {
         Transmission = 1,

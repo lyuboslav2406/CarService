@@ -7,6 +7,7 @@
     using CarService.Services.Mapping;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc.Rendering;
+
     using static System.Net.Mime.MediaTypeNames;
 
     public class CarViewModel : IMapTo<Car>, IMapFrom<Car>

@@ -1,5 +1,4 @@
-﻿
-namespace CarService.Data.Models.CarRepair
+﻿namespace CarService.Data.Models.CarRepair
 {
     public enum VoteType
     {

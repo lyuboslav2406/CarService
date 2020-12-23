@@ -1,12 +1,11 @@
-﻿using CarService.Data.Common.Models;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
-
-namespace CarService.Data.Models.CarRepair
+﻿namespace CarService.Data.Models.CarRepair
 {
-    public class Vote : BaseModel<string>
+    using System;
+    using System.ComponentModel.DataAnnotations;
+
+    using CarService.Data.Common.Models;
+
+    public class Vote : BaseDeletableModel<string>
     {
         public Vote()
         {
@@ -14,7 +13,7 @@ namespace CarService.Data.Models.CarRepair
         }
 
         [Required]
-        public int RepairId { get; set; }
+        public string RepairId { get; set; }
 
         public virtual Repair Repair { get; set; }
 

@@ -5,7 +5,7 @@
 
     using CarService.Data.Common.Models;
 
-    public class RepairComment : BaseModel<string>
+    public class RepairComment : BaseDeletableModel<string>
     {
         public RepairComment()
         {
@@ -13,11 +13,11 @@
         }
 
         [Required]
-        public int RepairId { get; set; }
+        public string RepairId { get; set; }
 
         public virtual Repair Repair { get; set; }
 
-        public int? ParentId { get; set; }
+        public string ParentId { get; set; }
 
         public virtual RepairComment Parent { get; set; }
 
