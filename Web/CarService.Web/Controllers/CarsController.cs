@@ -1,13 +1,10 @@
 ﻿namespace CarService.Web.Controllers
 {
-    using System.Collections;
     using System.Collections.Generic;
-    using System.Linq;
     using System.Threading.Tasks;
 
     using CarService.Data.Models;
     using CarService.Services.Data;
-    using CarService.Services.Mapping;
     using CarService.Web.ViewModels.Cars;
     using CloudinaryDotNet;
     using Microsoft.AspNetCore.Authorization;

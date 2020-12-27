@@ -1,14 +1,14 @@
-﻿using CarService.Data.Common.Repositories;
-using CarService.Data.Models.CarRepair;
-using CarService.Services.Mapping;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace CarService.Services.Data.RepairServices
+﻿namespace CarService.Services.Data.RepairServices
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+
+    using global::CarService.Data.Common.Repositories;
+    using global::CarService.Data.Models.CarRepair;
+    using Microsoft.AspNetCore.Mvc.Rendering;
+
     public class RepairService : IRepairService
     {
         private readonly IDeletableEntityRepository<Repair> repairRepository;
@@ -16,6 +16,32 @@ namespace CarService.Services.Data.RepairServices
         public RepairService(IDeletableEntityRepository<Repair> repairRepository)
         {
             this.repairRepository = repairRepository;
+        }
+
+        public IList<Repair> ByType(string type)
+        {
+
+            var repairTypeFinal = RepairType.Transmission;
+
+            switch (type)
+            {
+                case "Engine":
+                    repairTypeFinal = RepairType.Engine;
+                    break;
+                case "Suspension":
+                    repairTypeFinal = RepairType.Suspension;
+                    break;
+                case "Service":
+                    repairTypeFinal = RepairType.Service;
+                    break;
+                case "Clutch":
+                    repairTypeFinal = RepairType.Clutch;
+                    break;
+            }
+
+            var repairs = this.repairRepository.All().Where(a => a.RepairType == repairTypeFinal).ToList();
+
+            return repairs;
         }
 
         public async Task<string> CreateAsync(

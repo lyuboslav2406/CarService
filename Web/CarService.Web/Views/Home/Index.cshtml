@@ -5,5 +5,95 @@
 
 <div class="text-center">
     <h1 class="display-4">Welcome to @GlobalConstants.SystemName!</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
+
+<div class="slideshow-container">
+
+    <div class="mySlides fade">
+        <div class="numbertext">1 / 3</div>
+        <img src="https://res.cloudinary.com/dbsamrcry/image/upload/v1609080394/cast-baner-1900h600rh_bgbwsy.png" style="width:100%">
+    </div>
+
+    <div class="mySlides fade">
+        <div class="numbertext">2 / 3</div>
+        <img src="https://res.cloudinary.com/dbsamrcry/image/upload/v1609080394/prodakta_6-plus-auto_smqna-na-maslo_1900x600px_kjsveo.jpg" style="width:100%">
+    </div>
+
+    <div class="mySlides fade">
+        <div class="numbertext">3 / 3</div>
+        <img src="https://res.cloudinary.com/dbsamrcry/image/upload/v1609080394/online_magazin_baner-5cd2b9635f38a_gvwu7g.jpg" style="width:100%">
+    </div>
+
+    <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+    <a class="next" onclick="plusSlides(1)">&#10095;</a>
+
+</div>
+<br>
+
+<div style="text-align:center">
+    <span class="dot" onclick="currentSlide(1)"></span>
+    <span class="dot" onclick="currentSlide(2)"></span>
+    <span class="dot" onclick="currentSlide(3)"></span>
+</div>
+
+<div class="row" style="text-align:center">
+    <div class="col-md-4">
+        <img src="https://res.cloudinary.com/dbsamrcry/image/upload/v1609083343/transmission_gnadw3.webp" width="100" class="mr-3" alt="Transmission">
+        <div class="media-body">
+            <h5 class="mt-0"><a href="/repair/bytype/Transmission">Transmission</a></h5>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <img src="https://res.cloudinary.com/dbsamrcry/image/upload/v1609083685/2cd43b_7841ba510381434186845c04e6b9fb15_mv2_dashb4.png" width="100" class="mr-3" alt="Engine">
+        <div class="media-body">
+            <h5 class="mt-0"><a href="/repair/bytype/Engine">Engine</a></h5>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <img src="https://res.cloudinary.com/dbsamrcry/image/upload/v1609083820/suspension-6-126525_qpdazd.png" width="100" class="mr-3" alt="Suspension">
+        <div class="media-body">
+            <h5 class="mt-0"><a href="/repair/bytype/Suspension">Suspension</a></h5>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <img src="https://res.cloudinary.com/dbsamrcry/image/upload/v1609083905/repair-shop_ycqy2y.png" width="100" class="mr-3" alt="Service">
+        <div class="media-body">
+            <h5 class="mt-0"><a href="/repair/bytype/Service">Service</a></h5>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <img src="https://res.cloudinary.com/dbsamrcry/image/upload/v1609083953/Clutch_e5cjkk.png" width="100" class="mr-3" alt="Clutch">
+        <div class="media-body">
+            <h5 class="mt-0"><a href="/repair/bytype/Clutch">Clutch</a></h5>
+        </div>
+    </div>
+</div>
+
+<script>
+    var slideIndex = 1;
+    showSlides(slideIndex);
+
+    function plusSlides(n) {
+        showSlides(slideIndex += n);
+    }
+
+    function currentSlide(n) {
+        showSlides(slideIndex = n);
+    }
+
+    function showSlides(n) {
+        var i;
+        var slides = document.getElementsByClassName("mySlides");
+        var dots = document.getElementsByClassName("dot");
+        if (n > slides.length) { slideIndex = 1 }
+        if (n < 1) { slideIndex = slides.length }
+        for (i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";
+        }
+        for (i = 0; i < dots.length; i++) {
+            dots[i].className = dots[i].className.replace(" active", "");
+        }
+        slides[slideIndex - 1].style.display = "block";
+        dots[slideIndex - 1].className += " active";
+    }
+</script>

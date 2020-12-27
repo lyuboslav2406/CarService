@@ -62,6 +62,29 @@
             return this.View(listofRepairs);
         }
 
+        public IActionResult ByType(string type)
+        {
+            var repairs = this.repairService.ByType(type);
+
+            var listofRepairs = new List<RepairAllViewModel>();
+
+            foreach (var repair in repairs)
+            {
+                var currentRepar = new RepairAllViewModel
+                {
+                    Id = repair.Id,
+                    RepairType = repair.RepairType.ToString(),
+                    Description = repair.Description,
+                    CarRegistrationNumber = this.carservice.GetById(repair.CarId).RegistrationNumber,
+                    RepairImageUrl = this.repairImageService.GetImageUrlByRepairId(repair.Id),
+                };
+
+                listofRepairs.Add(currentRepar);
+            }
+
+            return this.View(listofRepairs);
+        }
+
         public IActionResult ById(string id)
         {
             var repair = this.repairService.GetById(id);

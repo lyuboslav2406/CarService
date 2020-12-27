@@ -20,5 +20,7 @@
         Repair GetById(string id);
 
         IList<Repair> GetAll();
+
+        IList<Repair> ByType(string type);
     }
 }
