@@ -18,6 +18,13 @@
             this.repairRepository = repairRepository;
         }
 
+        public IList<Repair> ByCar(string carId)
+        {
+            var repairs = this.repairRepository.All().Where(a => a.CarId == carId).ToList();
+
+            return repairs;
+        }
+
         public IList<Repair> ByType(string type)
         {
 

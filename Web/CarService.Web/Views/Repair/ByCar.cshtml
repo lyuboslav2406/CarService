@@ -1,0 +1,43 @@
+﻿@model IEnumerable<CarService.Web.ViewModels.Repair.RepairAllViewModel>
+
+@{
+    ViewData["Title"] = "Repairs";
+}
+
+<h1>Repairs of car @Html.DisplayNameFor(model => model.CarRegistrationNumber)</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.RepairType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ShortDescription)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RepairType)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ShortDescription)
+                </td>
+                <td>
+                    <img src="@item.RepairImageUrl" width="100" class="mr-3" alt="@item.ShortDescription">
+                </td>
+                <td>
+                    <a asp-action="ById" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

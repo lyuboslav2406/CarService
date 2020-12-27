@@ -6,7 +6,7 @@
     using CarService.Data.Models.CarRepair;
     using CarService.Services.Mapping;
 
-    public class RepairAllViewModel : IMapTo<Repair> , IMapFrom<Repair>
+    public class RepairAllViewModel : IMapTo<Repair>, IMapFrom<Repair>
     {
         public string Id { get; set; }
 
@@ -28,5 +28,7 @@
                         : content;
             }
         }
+
+        public string CarId { get; set; }
     }
 }

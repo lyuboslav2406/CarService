@@ -1,13 +1,12 @@
-﻿using CarService.Data.Common.Repositories;
-using CarService.Data.Models.CarRepair;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CarService.Services.Data.RepairServices
+﻿namespace CarService.Services.Data.RepairServices
 {
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+
+    using global::CarService.Data.Common.Repositories;
+    using global::CarService.Data.Models.CarRepair;
+
     public class CommentsService : ICommentsService
     {
         private readonly IDeletableEntityRepository<RepairComment> commentsRepository;

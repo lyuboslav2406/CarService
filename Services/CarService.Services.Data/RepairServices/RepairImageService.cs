@@ -1,18 +1,17 @@
-﻿using CarService.Data.Common.Repositories;
-using CarService.Data.Models.CarElements;
-using CarService.Data.Models.CarRepair;
-using CloudinaryDotNet;
-using CloudinaryDotNet.Actions;
-using Microsoft.AspNetCore.Http;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CarService.Services.Data.RepairServices
+﻿namespace CarService.Services.Data.RepairServices
 {
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Linq;
+    using System.Threading.Tasks;
+
+    using CloudinaryDotNet;
+    using CloudinaryDotNet.Actions;
+    using global::CarService.Data.Common.Repositories;
+    using global::CarService.Data.Models.CarRepair;
+    using Microsoft.AspNetCore.Http;
+
     public class RepairImageService : IRepairImageService
     {
         private readonly IDeletableEntityRepository<RepairImage> repairImageRepo;

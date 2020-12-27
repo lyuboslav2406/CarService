@@ -1,17 +1,12 @@
 ﻿namespace CarService.Services.Data
 {
-    using System.Collections;
     using System.Collections.Generic;
-    using System.IO;
     using System.Linq;
     using System.Threading.Tasks;
 
-    using CloudinaryDotNet;
-    using CloudinaryDotNet.Actions;
     using global::CarService.Data.Common.Repositories;
     using global::CarService.Data.Models.CarElements;
     using global::CarService.Services.Mapping;
-    using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc.Rendering;
 
     public class CarService : ICarService

@@ -1,13 +1,12 @@
-﻿using CarService.Data.Models.CarRepair;
-using CloudinaryDotNet;
-using Microsoft.AspNetCore.Http;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CarService.Services.Data.RepairServices
+﻿namespace CarService.Services.Data.RepairServices
 {
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
+
+    using CloudinaryDotNet;
+    using global::CarService.Data.Models.CarRepair;
+    using Microsoft.AspNetCore.Http;
+
     public interface IRepairImageService
     {
         string GetImageUrlByRepairId(string repairId);

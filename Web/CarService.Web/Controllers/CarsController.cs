@@ -39,7 +39,7 @@
         public IActionResult Details(string id)
         {
             var car = this.carService.GetById(id);
-            ;
+
             if (car == null)
             {
                 return this.NotFound();

@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
+
     using global::CarService.Data.Models.CarRepair;
     using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -22,5 +23,7 @@
         IList<Repair> GetAll();
 
         IList<Repair> ByType(string type);
+
+        IList<Repair> ByCar(string carId);
     }
 }

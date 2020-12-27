@@ -1,8 +1,6 @@
 ﻿namespace CarService.Web.Controllers
 {
-    using System;
     using System.Collections.Generic;
-    using System.Linq;
     using System.Threading.Tasks;
 
     using CarService.Data.Models;
@@ -85,6 +83,29 @@
             return this.View(listofRepairs);
         }
 
+        public IActionResult ByCar(string carId)
+        {
+            var repairs = this.repairService.ByCar(carId);
+
+            var listofRepairs = new List<RepairAllViewModel>();
+
+            foreach (var repair in repairs)
+            {
+                var currentRepar = new RepairAllViewModel
+                {
+                    Id = repair.Id,
+                    RepairType = repair.RepairType.ToString(),
+                    Description = repair.Description,
+                    CarRegistrationNumber = this.carservice.GetById(repair.CarId).RegistrationNumber,
+                    RepairImageUrl = this.repairImageService.GetImageUrlByRepairId(repair.Id),
+                };
+
+                listofRepairs.Add(currentRepar);
+            }
+
+            return this.View(listofRepairs);
+        }
+
         public IActionResult ById(string id)
         {
             var repair = this.repairService.GetById(id);
@@ -94,8 +115,9 @@
                 Id = repair.Id,
                 CarId = repair.CarId,
                 Comments = this.commentService.CommentsByRepairId(id),
-                //VotesCount = repair.Votes.Count(),
-                //CommentsCount = repair.Comments.Count(),
+
+                // VotesCount = repair.Votes.Count(),
+                // CommentsCount = repair.Comments.Count(),
                 CreatedOn = repair.CreatedOn,
                 Description = repair.Description,
                 Kilometers = repair.Kilometers,
