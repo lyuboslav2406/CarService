@@ -79,8 +79,9 @@
             foreach (var image in imagesToDelete)
             {
                 this.carImagesRepository.Delete(image);
-                this.carImagesRepository.SaveChangesAsync();
             }
+
+            await this.carImagesRepository.SaveChangesAsync();
 
             var carToDelete = this.carRepository.All().Where(x => x.Id == carId).FirstOrDefault();
 

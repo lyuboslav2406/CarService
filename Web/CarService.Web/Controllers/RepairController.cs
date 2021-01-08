@@ -179,8 +179,6 @@
                 await this.repairImageService.AddImageInBase(urlOfProducts, carId);
             }
 
-            ;
-
             return this.Redirect("Home");
         }
     }

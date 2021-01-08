@@ -27,7 +27,6 @@
 
         public IList<Repair> ByType(string type)
         {
-
             var repairTypeFinal = RepairType.Transmission;
 
             switch (type)
@@ -100,7 +99,7 @@
         public Repair GetById(string id)
         {
             var repair = this.repairRepository.All().Where(x => x.Id == id).FirstOrDefault();
-            ;
+
             return repair;
         }
 

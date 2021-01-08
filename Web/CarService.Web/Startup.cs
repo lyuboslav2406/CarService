@@ -7,9 +7,9 @@
     using CarService.Data.Common.Repositories;
     using CarService.Data.Models;
     using CarService.Data.Repositories;
-    using CarService.Data.Seeding;
     using CarService.Services.Data;
     using CarService.Services.Data.RepairServices;
+    using CarService.Services.Data.RequestRepairServices;
     using CarService.Services.Mapping;
     using CarService.Services.Messaging;
     using CarService.Web.ViewModels;
@@ -67,6 +67,10 @@
             Cloudinary cloudinary = new Cloudinary(account);
             services.AddSingleton(cloudinary);
 
+            // SendGrid
+            SendGridEmailSender sendgrid = new SendGridEmailSender(this.configuration["SendGrid:API"]);
+            services.AddSingleton(sendgrid);
+
             // Data repositories
             services.AddScoped(typeof(IDeletableEntityRepository<>), typeof(EfDeletableEntityRepository<>));
             services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
@@ -83,6 +87,7 @@
             services.AddTransient<ICommentsService, CommentsService>();
             services.AddTransient<IVoteService, VoteService>();
             services.AddTransient<IRepairImageService, RepairImageService>();
+            services.AddTransient<IRequestRepairService, RequestRepairService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -95,7 +100,8 @@
             {
                 var dbContext = serviceScope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
                 dbContext.Database.Migrate();
-                //new ApplicationDbContextSeeder().SeedAsync(dbContext, serviceScope.ServiceProvider).GetAwaiter().GetResult();
+
+                // new ApplicationDbContextSeeder().SeedAsync(dbContext, serviceScope.ServiceProvider).GetAwaiter().GetResult();
             }
 
             if (env.IsDevelopment())

@@ -178,7 +178,6 @@
                 list.Add(currentCar);
             }
 
-            ;
             return this.View(list);
         }
     }

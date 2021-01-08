@@ -43,5 +43,10 @@ namespace CarService.Data.Models
         public virtual ICollection<IdentityUserClaim<string>> Claims { get; set; }
 
         public virtual ICollection<IdentityUserLogin<string>> Logins { get; set; }
+
+        public static implicit operator string(ApplicationUser v)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -42,8 +42,8 @@
                 // Converting to OBJECT from JSON string.
                 RootObject weatherInfo = new JavaScriptSerializer().Deserialize<RootObject>(json);
 
-                // Special VIEWMODEL design to send only required fields not all fields which received from   
-                // www.openweathermap.org api  
+                // Special VIEWMODEL design to send only required fields not all fields which received from
+                // www.openweathermap.org api
                 ResultViewModel rslt = new ResultViewModel();
 
                 rslt.Country = weatherInfo.sys.country;
@@ -58,10 +58,10 @@
                 rslt.TempMin = Convert.ToString(weatherInfo.main.temp_min);
                 rslt.WeatherIcon = weatherInfo.weather[0].icon;
 
-                // Converting OBJECT to JSON String   
+                // Converting OBJECT to JSON String
                 var jsonstring = new JavaScriptSerializer().Serialize(rslt);
 
-                // Return JSON string.  
+                // Return JSON string.
                 return jsonstring;
             }
         }
