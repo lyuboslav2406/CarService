@@ -12,10 +12,12 @@
     public class RepairService : IRepairService
     {
         private readonly IDeletableEntityRepository<Repair> repairRepository;
+        private readonly IDeletableEntityRepository<RepairImage> repairImageRepository;
 
-        public RepairService(IDeletableEntityRepository<Repair> repairRepository)
+        public RepairService(IDeletableEntityRepository<Repair> repairRepository, IDeletableEntityRepository<RepairImage> repairImageRepository)
         {
             this.repairRepository = repairRepository;
+            this.repairImageRepository = repairImageRepository;
         }
 
         public IList<Repair> ByCar(string carId)
@@ -87,6 +89,23 @@
             await this.repairRepository.AddAsync(repair);
             await this.repairRepository.SaveChangesAsync();
             return repair.Id;
+        }
+
+        public async Task Delete(string repairId)
+        {
+            var imagesToDelete = this.repairImageRepository.All().Where(i => i.RepairId == repairId);
+
+            foreach (var image in imagesToDelete)
+            {
+                this.repairImageRepository.Delete(image);
+            }
+
+            await this.repairImageRepository.SaveChangesAsync();
+
+            var repairToDelete = this.repairRepository.All().Where(x => x.Id == repairId).FirstOrDefault();
+
+            this.repairRepository.HardDelete(repairToDelete);
+            await this.repairRepository.SaveChangesAsync();
         }
 
         public IList<Repair> GetAll()

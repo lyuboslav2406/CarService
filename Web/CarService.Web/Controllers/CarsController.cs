@@ -68,19 +68,6 @@
         [HttpGet]
         public async Task<IActionResult> Delete(string id)
         {
-            var car = this.carService.GetById(id);
-
-            var carUserId = car.UserId;
-
-            var currentUser = await this.userManager.GetUserAsync(this.User);
-
-            var currentUserId = currentUser.Id;
-
-            if (currentUserId != carUserId)
-            {
-                return this.BadRequest("Failed to delete the post");
-            }
-
             var viewModel = new CarDeleteViewModel
             {
                 Id = id,
@@ -93,6 +80,19 @@
         [Authorize]
         public async Task<IActionResult> Delete(CarDeleteViewModel input)
         {
+            var car = this.carService.GetById(input.Id);
+
+            var carUserId = car.UserId;
+
+            var currentUser = await this.userManager.GetUserAsync(this.User);
+
+            var currentUserId = currentUser.Id;
+
+            if (currentUserId != carUserId)
+            {
+                return this.BadRequest("Failed to delete the car");
+            }
+
             if (!this.ModelState.IsValid)
             {
                 return this.View(input);

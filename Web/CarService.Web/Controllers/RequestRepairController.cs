@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Threading.Tasks;
+
     using CarService.Common;
     using CarService.Data.Models;
     using CarService.Services.Data.RequestRepairServices;
@@ -71,10 +72,44 @@
 
             var currentUserId = currentUser.Id;
             _ = await this.requestRepairService.CreateAsync(model.Date, model.Description, currentUserId);
-
             await this.emailSender.SendEmailAsync(GlobalConstants.AdministratorEmailAdres, GlobalConstants.SystemName, currentUserEmail, GlobalConstants.SendGridSubject, model.Description); ;
 
-            return this.Redirect("Index");
+            return this.RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        [Authorize]
+        public IActionResult Delete(string id)
+        {
+            var request = this.requestRepairService.GetById(id);
+
+            var model = new DeleteRepairRequestViewModel
+            {
+                Description = request.Description,
+                Id = request.Id,
+            };
+
+            return this.View(model);
+        }
+
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> Delete(DeleteRepairRequestViewModel model)
+        {
+            var requestUserId = this.requestRepairService.GetById(model.Id).UserId;
+
+            var currentUser = await this.userManager.GetUserAsync(this.User);
+
+            var currentUserId = currentUser.Id;
+
+            if (currentUserId != requestUserId)
+            {
+                return this.BadRequest("Failed to delete the request");
+            }
+
+            await this.requestRepairService.Delete(model.Id);
+
+            return this.RedirectToAction("Index");
         }
     }
 }

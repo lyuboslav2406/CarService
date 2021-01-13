@@ -181,5 +181,47 @@
 
             return this.Redirect("Home");
         }
+
+
+        [Authorize]
+        [HttpGet]
+        public IActionResult Delete(string id)
+        {
+            var viewModel = new RepairDeleteModel
+            {
+                Id = id,
+            };
+
+            return this.View(viewModel);
+        }
+
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> Delete(RepairDeleteModel input)
+        {
+            var repair = this.repairService.GetById(input.Id);
+
+            var carId = repair.CarId;
+
+            var repairUserId = this.carservice.GetById(carId).UserId;
+
+            var currentUser = await this.userManager.GetUserAsync(this.User);
+
+            var currentUserId = currentUser.Id;
+
+            if (currentUserId != repairUserId)
+            {
+                return this.BadRequest("Failed to delete the repair");
+            }
+
+            if (!this.ModelState.IsValid)
+            {
+                return this.View(input);
+            }
+
+            await this.repairService.Delete(input.Id);
+
+            return this.RedirectToAction("All");
+        }
     }
 }

@@ -14,5 +14,8 @@
            string userId);
 
         IList<RepairRequest> GetAll();
+        RepairRequest GetById(string id);
+
+        public Task<string> Delete(string id);
     }
 }

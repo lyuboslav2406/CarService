@@ -33,11 +33,28 @@
             return userId;
         }
 
+        public async Task<string> Delete(string id)
+        {
+            var repairRequest = this.requestRepairRepository.All().Where(x => x.Id == id).FirstOrDefault();
+
+            this.requestRepairRepository.Delete(repairRequest);
+            await this.requestRepairRepository.SaveChangesAsync();
+
+            return repairRequest.Id;
+        }
+
         public IList<RepairRequest> GetAll()
         {
             var repairs = this.requestRepairRepository.All().ToList();
 
             return repairs;
+        }
+
+        public RepairRequest GetById(string id)
+        {
+            var repairRequest = this.requestRepairRepository.All().Where(x => x.Id == id).FirstOrDefault();
+
+            return repairRequest;
         }
     }
 }

@@ -25,5 +25,7 @@
         IList<Repair> ByType(string type);
 
         IList<Repair> ByCar(string carId);
+
+        Task Delete(string repairId);
     }
 }
