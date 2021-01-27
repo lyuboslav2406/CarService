@@ -66,7 +66,7 @@
 
         [Authorize]
         [HttpGet]
-        public async Task<IActionResult> Delete(string id)
+        public IActionResult Delete(string id)
         {
             var viewModel = new CarDeleteViewModel
             {

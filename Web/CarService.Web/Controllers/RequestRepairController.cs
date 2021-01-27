@@ -72,7 +72,7 @@
 
             var currentUserId = currentUser.Id;
             _ = await this.requestRepairService.CreateAsync(model.Date, model.Description, currentUserId);
-            await this.emailSender.SendEmailAsync(GlobalConstants.AdministratorEmailAdres, GlobalConstants.SystemName, currentUserEmail, GlobalConstants.SendGridSubject, model.Description); ;
+            await this.emailSender.SendEmailAsync(GlobalConstants.AdministratorEmailAdres, GlobalConstants.SystemName, currentUserEmail, GlobalConstants.SendGridSubject, model.Description);
 
             return this.RedirectToAction("Index");
         }

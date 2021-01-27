@@ -5,12 +5,12 @@
 @model CarService.Web.ViewModels.Repair.RepairViewModel
 @if (this.User.Identity.Name == Model.UserUserName)
 {
-    <a asp-controller="Repair" asp-action="Edit" asp-route-id="@Model.Id" class=" btn-lg btn-primary"> Edit repair</a>
-    <a asp-controller="Repair" asp-action="Delete" asp-route-id="@Model.Id" class=" btn-lg btn-danger"> Delete repair</a>
+    <a asp-controller="Repair" asp-action="Edit" asp-route-id="@Model.Id" class=" btn-lg btn-primary"> Edit post</a>
+    <a asp-controller="Repair" asp-action="Delete" asp-route-id="@Model.Id" class=" btn-lg btn-danger"> Delete post</a>
 }
 <hr />
 @{
-    this.ViewData["Title"] = Model.RepairType;
+    this.ViewData["Title"] = Model.RepairTypeByString;
     void DisplayComments(string parentId)
     {
         var comments = this.Model.Comments.Where(x => x.ParentId == parentId);
@@ -29,7 +29,7 @@
                                 <div class="media flex-wrap w-100 align-items-center">
                                     <img src="https://res.cloudinary.com/dxfq3iotg/image/upload/v1574583246/AAA/2.jpg" class="d-block ui-w-40 rounded-circle" alt="">
                                     <div class="media-body ml-3">
-                                        @comment.UserId
+                                        @comment.UserUserName
                                         <div class="text-muted small">
                                             <time datetime="@comment.CreatedOn.ToString("O")"></time>
                                         </div>
@@ -44,7 +44,7 @@
                             </div>
                             <div class="card-body">
                                 <article>
-                                    @Html.Raw(comment.Content)
+                                    @Html.Raw(comment.SanitizedContent)
                                 </article>
                                 @{ DisplayComments(comment.Id); }
                             </div>
@@ -63,35 +63,21 @@
     </div>
 }
 
-<h1>@Model.RepairType</h1>
+<h1>Repair type: @Model.RepairTypeByString</h1>
+<br />
 
 <!-- The four columns -->
 <div class="row">
     @foreach (var image in Model.Images)
     {
         <div class="column">
-            <img src="@image.Url" alt="Nature" style="width:100%" onclick="myFunction(this);">
+            <img src="@image.Url" alt="Nature" style="width:100%" onclick="expandImg(this);">
         </div>
     }
 </div>
 
-<dl class="row">
-    <dt class="col-sm-2">
-        @Html.DisplayNameFor(model => model.Kilometers)
-    </dt>
-    <dd class="col-sm-10">
-        @Html.DisplayFor(model => model.Kilometers)
-    </dd>
-    <dt class="col-sm-2">
-        @Html.DisplayNameFor(model => model.RepairType)
-    </dt>
-    <dd class="col-sm-10">
-        @Html.DisplayFor(model => model.RepairType)
-    </dd>
-</dl>
-
 <div class="container">
-    <span onclick="this.parentElement.style.display='none'" class="closebtn">&times;</span>
+    <button type="button" onclick="this.parentElement.style.display='none'" class="btn">&times;</button>
     <img id="expandedImg" style="width:100%">
     <div id="imgtext"></div>
 </div>
@@ -128,7 +114,9 @@
                 </div>
                 <div class="card-body">
                     <article>
-                        @Html.Raw(Model.SanitizedDescription)
+                        <h2>Car: @Model.CarMake @Model.CarModel</h2>
+                        <h3>Repair is created at @Model.Kilometers km.</h3>
+                        <article>Repair description: @Html.Raw(Model.SanitizedDescription)</article>
                     </article>
 
                     @if (this.User.Identity.IsAuthenticated)
@@ -152,14 +140,14 @@
 </script>
 <div>
     <form asp-controller="Comments" asp-action="Create" method="post" id="AddCommentForm" style="display: none">
-        <input type="hidden" name="RepairId" value="@this.Model.Id" />
-        <input type="hidden" name="RepairId" value="0" />
+        <input type="hidden" name="PostId" value="@this.Model.Id" />
+        <input type="hidden" name="ParentId" value="0" />
         <div>
-            <label for="Description"></label>
-            <textarea name="Description" id="Description" class="form-control"></textarea>
+            <label for="Content"></label>
+            <textarea name="Content" id="Content" class="form-control"></textarea>
         </div>
         <div>
-            <input type="submit" class="btn btn-primary" value="Add description" />
+            <input type="submit" class="btn btn-primary" value="Add comment" />
         </div>
     </form>
 </div>
@@ -174,7 +162,7 @@
             }, 1000);
         }
 
-        function sendVote(repairId, isUpVote) {
+        function sendVote(postId, isUpVote) {
             var token = $("#votesForm input[name=__RequestVerificationToken]").val();
             var json = { postId: postId, isUpVote: isUpVote };
             $.ajax({
@@ -192,7 +180,7 @@
     </script>
 
     <script>
-        function myFunction(imgs) {
+        function expandImg(imgs) {
             var expandImg = document.getElementById("expandedImg");
             var imgText = document.getElementById("imgtext");
             expandImg.src = imgs.src;

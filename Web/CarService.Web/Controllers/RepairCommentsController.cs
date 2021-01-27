@@ -8,12 +8,12 @@
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
 
-    public class CommentsController : BaseController
+    public class RepairCommentsController : BaseController
     {
         private readonly ICommentsService commentsService;
         private readonly UserManager<ApplicationUser> userManager;
 
-        public CommentsController(
+        public RepairCommentsController(
             ICommentsService commentsService,
             UserManager<ApplicationUser> userManager)
         {
@@ -25,11 +25,11 @@
         public async Task<IActionResult> Create(CreateCommentInputModel input)
         {
             var parentId =
-                input.ParentId == string.Empty ? null : input.ParentId;
+                input.ParentId == string.Empty ? string.Empty : input.ParentId;
 
-            //if (parentId != string.Empty)
+            //if (parentId.HasValue)
             //{
-            //    if (!this.commentsService.IsInPostId(parentId, input.RepairId))
+            //    if (!this.commentsService.is(parentId.Value, input.RepairId))
             //    {
             //        return this.BadRequest();
             //    }
@@ -38,7 +38,7 @@
             var userId = this.userManager.GetUserId(this.User);
             await this.commentsService.Create(input.RepairId, userId, input.Content, parentId);
 
-            return this.RedirectToAction("RepairId", "Repair", new { id = input.RepairId });
+            return this.RedirectToAction("ById", "Repair", new { id = input.RepairId });
         }
     }
 }

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace CarService.Web.ViewModels.RequestRepair
+﻿namespace CarService.Web.ViewModels.RequestRepair
 {
     public class DeleteRepairRequestViewModel
     {

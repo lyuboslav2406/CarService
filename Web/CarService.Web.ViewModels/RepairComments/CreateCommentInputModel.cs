@@ -1,4 +1,6 @@
-﻿namespace CarService.Web.ViewModels.Comments
+﻿
+
+namespace CarService.Web.ViewModels.RepairComments
 {
     public class CreateCommentInputModel
     {

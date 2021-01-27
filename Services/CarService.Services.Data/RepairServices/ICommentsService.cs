@@ -9,7 +9,7 @@
     {
         Task Create(string repairId, string userId, string content, string parentId = null);
 
-        bool IsInPostId(string commentId, string repairId);
+        bool IsInRepairId(string commentId, string repairId);
 
         IEnumerable<RepairComment> CommentsByRepairId(string repairId);
     }

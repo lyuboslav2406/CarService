@@ -4,6 +4,7 @@
     using System.Threading.Tasks;
 
     using CarService.Data.Models;
+    using CarService.Data.Models.CarRepair;
     using CarService.Services.Data;
     using CarService.Services.Data.RepairServices;
     using CarService.Web.ViewModels.Repair;
@@ -18,6 +19,8 @@
         private readonly ICarService carservice;
         private readonly IRepairImageService repairImageService;
         private readonly ICommentsService commentService;
+        private readonly IMakesService makesService;
+        private readonly IModelsService modelsService;
         private readonly UserManager<ApplicationUser> userManager;
         private readonly Cloudinary cloudinary;
 
@@ -26,6 +29,8 @@
             ICarService carservice,
             IRepairImageService repairImageService,
             ICommentsService commentService,
+            IMakesService makesService,
+            IModelsService modelsService,
             UserManager<ApplicationUser> userManager,
             Cloudinary cloudinary)
         {
@@ -33,6 +38,8 @@
             this.carservice = carservice;
             this.repairImageService = repairImageService;
             this.commentService = commentService;
+            this.makesService = makesService;
+            this.modelsService = modelsService;
             this.userManager = userManager;
             this.cloudinary = cloudinary;
         }
@@ -108,23 +115,7 @@
 
         public IActionResult ById(string id)
         {
-            var repair = this.repairService.GetById(id);
-
-            var repairViewModel = new RepairViewModel
-            {
-                Id = repair.Id,
-                CarId = repair.CarId,
-                Comments = this.commentService.CommentsByRepairId(id),
-
-                // VotesCount = repair.Votes.Count(),
-                // CommentsCount = repair.Comments.Count(),
-                CreatedOn = repair.CreatedOn,
-                Description = repair.Description,
-                Kilometers = repair.Kilometers,
-                Images = this.repairImageService.GetImagesUrlsByRepairId(id),
-                RepairType = repair.RepairType.ToString(),
-                UserUserName = this.HttpContext.User.Identity.Name,
-            };
+            var repairViewModel = this.repairService.GetById<RepairViewModel>(id);
 
             if (repairViewModel == null)
             {
@@ -135,6 +126,15 @@
             {
                 repairViewModel.VotesCount = 0;
             }
+
+            repairViewModel.Images = this.repairImageService.GetImagesUrlsByRepairId(id);
+
+            repairViewModel.RepairTypeByString = ((RepairType)repairViewModel.RepairType).ToString();
+
+            var car = this.carservice.GetById(repairViewModel.CarId);
+
+            repairViewModel.CarMake = this.makesService.GetNameById(car.MakeId);
+            repairViewModel.CarModel = this.modelsService.GetNameById(car.ModelId);
 
             return this.View(repairViewModel);
         }
@@ -182,7 +182,6 @@
             return this.Redirect("Home");
         }
 
-
         [Authorize]
         [HttpGet]
         public IActionResult Delete(string id)
@@ -199,7 +198,7 @@
         [Authorize]
         public async Task<IActionResult> Delete(RepairDeleteModel input)
         {
-            var repair = this.repairService.GetById(input.Id);
+            var repair = this.repairService.GetById<RepairViewModel>(input.Id);
 
             var carId = repair.CarId;
 

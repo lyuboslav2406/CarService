@@ -2,10 +2,10 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
     using System.Linq;
     using System.Net;
     using System.Text.RegularExpressions;
+
     using AutoMapper;
     using CarService.Data.Models.CarElements;
     using CarService.Data.Models.CarRepair;
@@ -23,9 +23,9 @@
 
         public string SanitizedDescription => new HtmlSanitizer().Sanitize(this.Description);
 
-        public string RepairType { get; set; }
+        public int RepairType { get; set; }
 
-        public List<SelectListItem> RepairTypes { get; set; }
+        public string RepairTypeByString { get; set; }
 
         public int Kilometers { get; set; }
 
@@ -33,11 +33,15 @@
 
         public Car Car { get; set; }
 
+        public string CarModel { get; set; }
+
+        public string CarMake { get; set; }
+
         public string UserUserName { get; set; }
 
         public int VotesCount { get; set; }
 
-        public IEnumerable<RepairComment> Comments { get; set; }
+        public IEnumerable<RepairCommentViewModel> Comments { get; set; }
 
         public string ShortDescription
         {

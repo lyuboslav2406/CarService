@@ -7,6 +7,7 @@
 
     using global::CarService.Data.Common.Repositories;
     using global::CarService.Data.Models.CarRepair;
+    using global::CarService.Services.Mapping;
     using Microsoft.AspNetCore.Mvc.Rendering;
 
     public class RepairService : IRepairService
@@ -115,11 +116,12 @@
             return repairs;
         }
 
-        public Repair GetById(string id)
+        public T GetById<T>(string id)
         {
-            var repair = this.repairRepository.All().Where(x => x.Id == id).FirstOrDefault();
+            var repair = this.repairRepository.All().Where(x => x.Id == id);
+            var result = repair.To<T>().FirstOrDefault();
 
-            return repair;
+            return result;
         }
 
         public List<SelectListItem> GetRepairTypes()

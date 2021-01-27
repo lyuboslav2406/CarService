@@ -18,7 +18,7 @@
 
         public List<SelectListItem> GetRepairTypes();
 
-        Repair GetById(string id);
+        T GetById<T>(string id);
 
         IList<Repair> GetAll();
 

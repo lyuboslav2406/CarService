@@ -38,7 +38,7 @@
             await this.commentsRepository.SaveChangesAsync();
         }
 
-        public bool IsInPostId(string commentId, string repairId)
+        public bool IsInRepairId(string commentId, string repairId)
         {
             var commentRepairId = this.commentsRepository
                 .All()
